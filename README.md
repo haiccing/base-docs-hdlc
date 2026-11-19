@@ -6,7 +6,7 @@ The aim is full AI autonomy, from a need to running software that
 satisfies it: KISS, consistent rules and self-containment make it
 possible. Work arrives as a request, from a person or from `haici`, is
 scheduled, built, validated, released and reported back. An agent does
-what it can on its own; structure and design are decided with a person.
+what it can on its own; structure and design are decided as a team.
 The rules here are proposals to be tested: when practice shows one is
 wrong, it is raised.
 
@@ -22,8 +22,10 @@ wrong, it is raised.
   missing or inaccessible information, an exception that halts the
   work. Collaboration is discussion: discuss first, write what has
   settled.
-- **Structure and design are decided with a person**, not alone; what is
-  left to the agent is its to decide and to say.
+- **Structure and design are decided as a team**, in discussion, not by
+  one member alone; what is left to the agent is its to decide and to
+  say. The team is its members, human and AI alike, each a person in
+  it: one member's words are input to the discussion, not a decision.
 - **Natural language**, short; one question at a time, with an opinion
   and a recommendation.
 - **What is settled is recorded in the words used**, with its reason.
@@ -43,7 +45,7 @@ wrong, it is raised.
   lines with one example, only what is still open asked.
 - **Check before asking**: the code, the documentation, the repositories.
 - **Long stretches of planning, then a batch built**: what settles is
-  stacked as scheduled work and built when the person says so, then
+  stacked as scheduled work and built when the team agrees, then
   worked through to the end without stopping at each step.
 - **Say what is being done** when a step takes long; report after each
   step of a build, plainly, with what passed and what did not.
@@ -73,6 +75,10 @@ wrong, it is raised.
   failure stops the work and says why.
 - **Knowledge stays with its concern**: a part knows only what its
   concern needs.
+- **What is there is used as it is**: something new is made only where
+  nothing does it already; a new platform or application takes the
+  platform's protocols and commands as they are and adds only what is
+  its own.
 
 ## Documentation
 
@@ -84,6 +90,52 @@ wrong, it is raised.
   its own. A decision and its reason: the record of the work.
 - **The rules are checked**, not remembered: the README rules, the code
   rules and a package's structure run as tests.
+- **Worked from the packages** (the human, 2026-11-18): the
+  documentation lives in the packages and is kept there as the
+  implementation goes on, a design still changing included; the
+  direction of what is not built is the vision's
+  (`base-docs-vision`). The development repository's records hold the
+  history: what was said, decided, found, scheduled; what settles moves
+  into the packages and leaves the records.
+
+## Working demos
+
+Feedback on the documentation, settled with the human (2026-11-18), to
+shape the way we work; not yet built (scheduled work). An AI is the
+documentation's primary user, and for it working demos are the most
+important part of the documentation, when they run in the validation: a
+demo nothing runs is prose with code in it, and goes stale as prose does.
+
+- **Every how-to runnable**: a how-to has its page and a script beside
+  it, its steps (`.haicc` lines, `sh` where the machine level is
+  needed), each with what it answers (`# expect: <fragment>` under its
+  line, checked). A run proves what the page says; a reader sees the
+  answer beside the command.
+- **A scene and its steps**: the scene is what has to be there before the
+  first step (an install booted, a host in service, a swarm); a how-to's
+  scene is often another's end, so preparing it runs the how-tos before
+  it. Two ways through: stepped, a step at a time, each answer seen;
+  or run through, every step and its check (a demo, the validation).
+- **Scenes prepared in the background**: an install brought up to the
+  first step while other work goes on, started by an intention to do a
+  piece of work. A how-to has a unique key (`<org>/<package>/<name>`),
+  its scene placed by it: a development install preinstalls the scenes,
+  ready to start, and they can be explored as part of the documentation.
+- **Run in the validation**: a package's pre-release (`full`) runs its
+  how-tos, grouped in one install a package or a pattern, in their order;
+  one that needs Docker or the network says so and is skipped with the
+  reason; a how-to that fails fails the pre-release.
+- **A run's report, stored with the how-to**: each run's report beside
+  the how-to's page, fresh at every pre-release, read with `info` like the
+  page: every step's command and answer, what each changed, its metrics,
+  the checks, the state before and after. A report producer writes it
+  from the run's records, in its shapes (JSON for agents and comparisons,
+  Markdown for people).
+- **A direct run**, a demo with no steps: its report is enough to say
+  what it does and that it works on this release; exploring its end, or
+  trying a variation, needs it live, prepared again on demand.
+- **The review by an AI agent as the documentation's user** stays beside
+  them: a run proves the commands, the review finds what cannot be found.
 
 ## Validation
 
@@ -114,6 +166,14 @@ Before every commit:
 - **The implementation validation**: every pattern a package implements
   (its kind, a layer, hooks, a service, a continuation script) has a
   how-to naming it; one without fails the code check.
+- **A report certifies the content it was run on**: after a commit of
+  generated files (the modules' copies, a dispatcher), the changed
+  packages' pre-releases again before the work is final; the strict
+  release check says every report current.
+- **A test waits for a process to end** (`kill -0`), not only for it to
+  stop answering; nothing left running after a run.
+- **A test run's last lines are read**: an apostrophe in a test's title
+  or message breaks its file, and a filter on the output hides that.
 
 ## Branches
 
@@ -154,21 +214,36 @@ Before every commit:
   built.
 - **Each part of the work is recorded**: what was built, what was
   decided while building and why, what was found, how it was validated.
+- **How a task reads**: **asked**, a request from a member, not yet
+  discussed; **settled**, what the team agreed in discussion, in the
+  words used and who said what, built as written; **left to us**, handed
+  over, ours to decide and change while building, said what was done;
+  **proposed**, put to the team by a member and not yet agreed, agreed
+  before it is built unless the task says it is ours; **where**, the code found when the task was
+  discussed, a start, checked again.
+- **From vision to work**: a direction the team agreed, and the
+  order of its steps, are the vision's until they are scheduled; a step
+  designed and requested as a phase becomes scheduled work, taken up as
+  requests and reported back, and leaves the vision.
 
 ## Tooling
 
 Today's tooling, in the development repository's `tools/`, until the
-HDLC is a protocol of its own:
+HDLC is a protocol of its own. Kept to become packages: one tool, one
+concern; what two tools share in `lib/`; a tool reads and writes files and
+prints one line of JSON a result, so another can use it.
 
 - `install.sh`: the dependencies, replayed from the lockfile.
 - `release.js`: every package assembled and bundled into the sources,
   Bare's tarball, the `haicc` installer; `--strict` refuses a stale
   report.
-- `package-test.js <package>`: a package's pre-release.
-- `package-template.sh <package>`: a package brought to the template,
-  its generic tests copied, its pin recorded.
-- `products.sh <module>`, `packages.sh -m <what> <package>`: the
+- `package-test.js <org>/<package>`: a package's pre-release.
+- `package-template.sh <org>/<package>`: a package brought to its
+  organisation's template, its generic tests copied, its pin recorded.
+- `products.sh <module>`, `packages.sh -m <what> <org>/<package>`: the
   product repositories updated.
+- `lib/orgs.js`: the organisations, one list every tool reads: each its
+  template and the organisations its packages may depend on.
 - `info-extract.js`, `code-check.js`: the checks; `info-view.js`: the docs
   view, the docs mrepo of a transient install (every package the sources
   offer) in one page, browsed by keywords.
