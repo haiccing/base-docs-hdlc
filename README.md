@@ -155,7 +155,8 @@ says where it is built.
 ## Working demos
 
 Feedback on the documentation, settled with the human (2026-11-18), to
-shape the way we work; not yet built (scheduled work). An AI is the
+shape the way we work; built in part (below, "Built"), the rest scheduled
+work. An AI is the
 documentation's primary user, and for it working demos are the most
 important part of the documentation, when they run in the validation: a
 demo nothing runs is prose with code in it, and goes stale as prose does.
@@ -190,6 +191,15 @@ demo nothing runs is prose with code in it, and goes stale as prose does.
   trying a variation, needs it live, prepared again on demand.
 - **The review by an AI agent as the documentation's user** stays beside
   them: a run proves the commands, the review finds what cannot be found.
+- **Built** (2026-11-21): the script beside each page, `steps.haicc`
+  (the human: "yes, one script with step blocks"), the page's steps
+  filled from it at extraction; the runner internal, the howto protocol
+  (`base-package-howto`: run, step, report, reset), a how-to's boot its
+  scene; every how-to with its script but those at the machine level or
+  in development, `sh` procedures that say so; run end to end by
+  `base-linux-haicc`'s `test/howtos.sh`. Not yet: each how-to an install
+  of its own under its unique URI, run by a package's pre-release, its
+  report beside it.
 
 ## Validation
 
