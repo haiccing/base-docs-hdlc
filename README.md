@@ -209,6 +209,14 @@ needs to be larger. We can do (small) single package testing where the
 change is being exercised. Build up batch of change in execute/main,
 then regularly run larger tests with main commit at the end"):
 
+- **A test has its surface defined** (the human, 2026-11-26: "testing
+  needs a proper test surface definition"): before a test is asked for,
+  what it covers is written down: the packages and modules in it, what
+  is left out and why, what is run, what passing means. It follows from
+  what changed and from what is self-contained: a change to a package
+  is tested in that package, its own copy of everything, not in every
+  package there is. A prompt for the larger test carries its surface;
+  one without it is not ready to be handed over.
 - **Each change its own commit, on a small test where it is
   exercised**: one module's tests, or one package's pre-release
   (rebuilt, its `full` set run from its bundle, the report written into
@@ -239,6 +247,13 @@ then regularly run larger tests with main commit at the end"):
 - **Anything the command touches changed**: the `haicc` command end to
   end, the script that covers it. Containers made by the tests need a Docker daemon; none is left
   after.
+- **A package is deployed on its own and tested there** (the human,
+  2026-11-26: "a protocol package or any other should be set up such it
+  can be deployed and tested that way"): installed as an mrepo from its
+  own list, its tests run in it where it runs; the general approach,
+  the package specification's rule (`base-docs-package`, "The rules").
+  Proven on the runtime package (2026-11-26): deployed as `local/rt`,
+  its in-situ set and its `types` test run in it, passing.
 - **A package tests what it provides**, in a test of its own; where
   nothing is specific to it, a dummy that says so. A test that runs
   nothing by accident fails.
@@ -261,10 +276,73 @@ then regularly run larger tests with main commit at the end"):
 - **A test run's last lines are read**: an apostrophe in a test's title
   or message breaks its file, and a filter on the output hides that.
 
+## Schema migration
+
+How the packages are brought to schemas, while it lasts (2026-11-26,
+with the human); the design: `base-docs-vision`, "Type system" and
+"Solutions"; the rules for the data: `base-docs-avro`.
+
+- **A package at a time, in place**: its name kept, its types declared
+  in its `types/`, its code brought to them; migrated code never calls
+  a package not yet migrated. The order: the runtime, `protocol`, then
+  the packages a component is made of.
+- **Bit by bit, each tested, learnt from** (the human: "we implement the
+  changes bit by bit as we work our way through the code, test, learn
+  from it"): the types first, checked on examples; then the functions
+  that make the new structure, pure, checked against the types; then
+  the code that calls them.
+- **A type is a package's, its check the package's**: a module's code
+  is checked against the types in the test of the package that declares
+  them, not in the module's own.
+- **The smallest whole is the runtime alone**: an mrepo of the runtime
+  package's structure, its process started, a request dropped into its
+  inbox folder and read back completed (its `start` test): no boot, no
+  command, no other package. A request goes through the whole train
+  there even when it is refused: with no `protocol` package nothing is
+  active, and it comes back saying so.
+- **Every package installable, its tests run where it runs** (the human:
+  "Our package format makes each package installable. Once up the
+  resources within can be accessed, test run (once up and running
+  present in the registry)"): a package brought over is installed, its
+  own tests run in it; the fixtures, the registries, there later ("this
+  initial step does not have the 'fixtures' yet, but they will be there
+  soon").
+- **What is implemented and run ends up in a test, where useful** (the
+  human, 2026-11-26: "Don't try to reach full test coverage from here,
+  just make sure what we implement and run ends up in tests if
+  useful"): no test rewritten for parity; a test of code that is
+  replaced goes with it.
+- **The working set grows**: the runtime alone, then with `protocol` (a
+  protocol activated, a request executed), then a package at a time,
+  each with its actions' answers brought to the new structure.
+- **What reads what the runtime writes** is brought over with it or
+  after it: the `haicc` app (what it prints), the how-to runner (the
+  metrics and what changed, from the log), the viewers, an action that
+  passes an answer on, the end-to-end scripts.
+- **The larger test, while it lasts, is the working set only** (the
+  human, 2026-11-26: "It is testing the whole codebase while most of it
+  is parked, awaiting schema enablement"; "No blanket approach, from
+  package to package to limit testing surface"): its surface the
+  packages brought to schemas so far and what was changed for them:
+  their pre-releases, the two checks, each deployed on its own and its
+  validation tests run in it. Passed, those packages are merged, pushed
+  and released, each on its own. A parked package is not in the surface:
+  unchanged in what it does, it stays at its last release until it is
+  schema enabled; an end-to-end script comes back when every package it
+  uses is. The prompt names the surface each time.
+
 ## Branches
 
 - **`main` holds settled state**; it changes only by plain merges from
   `execute/main`, the execution branch, never by direct commits.
+- **A batch handed over is frozen** (the human, 2026-11-26: checking in
+  while the local agent tests "interferes with local's testing"): once
+  the prompt for the larger test is committed, `execute/main` does not
+  move until the local agent's note is on `main`: it tests that commit,
+  commits its reports on it and merges it. The work goes on meanwhile on
+  `execute/next`, made from that commit; the note in, `main` is merged
+  into `execute/next`, and `execute/next` into `execute/main` when the
+  next batch is handed over.
 - **Plain merges**, no squash, no rebase: history reaches `main` as it
   happened. No force-push on any branch; a branch is deleted only after a
   plain merge.
@@ -281,6 +359,15 @@ then regularly run larger tests with main commit at the end"):
   plain-merged into its repository; a package's folder written over its
   repository's `main`. When the human asks, or at a milestone agreed
   with them: not after every change.
+- **A package is self-contained, and so is everything done with it**
+  (the human, 2026-11-26: "Our packages are self contained"): it carries
+  its own copy of every module it uses, so it is built, tested, pushed
+  and released on its own, from the commit it was tested at. A package
+  that passed its test surface is released whatever state the others
+  are in: nothing waits for the rest, there is no release of everything
+  at once. The organisation's manifest holds this: each package's entry
+  names the commit its bundle came from, so a manifest lists newly
+  released packages beside those of an earlier release.
 - **New repositories are created by a person.**
 - **Deploy and teardown, no upgrade in place**: what changes how things
   are placed or stored comes with a new deploy after a teardown; an
