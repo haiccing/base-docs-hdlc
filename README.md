@@ -142,6 +142,10 @@ says where it is built.
   folder, reached from the one above. The generic lives in the
   documentation packages; a package or a module documents only what is
   its own. A decision and its reason: the record of the work.
+- **A page in a step's documentation pass is read whole** (the human,
+  2026-11-27: "yes, add it"): every statement set beside what is built,
+  not searched for the change in hand; a page left behind by an earlier
+  change is found that way.
 - **The rules are checked**, not remembered: the README rules, the code
   rules and a package's structure run as tests.
 - **Worked from the packages** (the human, 2026-11-18): the
@@ -385,6 +389,27 @@ with the human); the design: `base-docs-vision`, "Type system" and
   `Pattern: <name>`.
 - **A reading is put back in its own words** and confirmed before it is
   built.
+- **Every task step: a cold review, then a collaborative review**,
+  mandatory, before it is built (the human, 2026-11-27: "for every task
+  step there is a cold review follow by a collaborative review. That
+  way we can discuss inaccurracys in the documentation as well").
+  The cold review: an agent with no context of the work reads the task
+  and the documentation packages whole, writes what they settle for the
+  step, by document and section, then compares the step's plan with it:
+  where the plan contradicts the documentation, what it is silent on,
+  where the documentation conflicts with itself or is out of date, what
+  it leaves open. The collaborative review: the team goes through what
+  it raised, point by point; each ends in the plan brought in line, or
+  in a decision, and the documentation corrected. The documentation is
+  the decisions made (the human: "our documentation should be up to
+  date, we would have discussed and made decisions and documented
+  them. Your task step should be in line with that"); only then is the
+  step built. **Closed the same way** (the human, 2026-11-27: "Do we
+  have a post implementation cold review penciled in? I think that is
+  required to close off an implementation step"): once built, a cold
+  review of what is there, the code and the documentation, against the
+  plan and the documented design, then gone through together; a step
+  is done when that is.
 - **Each part of the work is recorded**: what was built, what was
   decided while building and why, what was found, how it was validated.
 - **How a task reads**: **asked**, a request from a member, not yet
