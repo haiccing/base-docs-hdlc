@@ -72,8 +72,11 @@ says where it is built.
   checked at the boundary"): inside, nothing reaches the internet;
   what comes from outside comes through a boundary process, validated
   and checked there. Built in part: an install deploys from its
-  sources folder only, filled by a download (`base-docs-haicc`,
-  "sources").
+  sources folders only, filled by a download or a folder linked
+  (`base-docs-haicc`, "sources"); the download the boundary process for
+  the sources, what it fetches checked there (its safeguards later).
+  Not yet: a folder linked is checked nowhere (the pre-boot check
+  later); a pair's container image is pulled from inside.
 - **Private instance data in a repository of its own**: a unit
   describes the private data it needs (its config schema, meaning,
   examples) and holds none; a running instance's config, data and
@@ -147,6 +150,12 @@ says where it is built.
 - **Validation at the boundary**: input is validated once, where it
   enters, by the one validator for its kind; inside, the happy path. A
   failure stops the work and says why.
+- **Fail on an inability to function, never on a check inside** (the
+  human, 2026-11-28: "This is internal processing and we don't do
+  validation. We fail on an inability to function, which is
+  different"): inside, nothing is validated; a request fails when the
+  work cannot be done (a type or variant that cannot be resolved, bytes
+  that cannot be encoded or decoded), saying why.
 - **Knowledge stays with its concern**: a part knows only what its
   concern needs.
 - **What is there is used as it is**: something new is made only where
@@ -429,7 +438,13 @@ with the human); the design: `base-docs-vision`, "Type system" and
   required to close off an implementation step"): once built, a cold
   review of what is there, the code and the documentation, against the
   plan and the documented design, then gone through together; a step
-  is done when that is.
+  is done when that is. **Applied in scope** (the human, 2026-11-28:
+  "the documentation sets the rules, but they are (in review) only
+  applied to that part of the codebase that is 'in scope'. Any review
+  touching the other package should pick up the violations"): a
+  review holds the step's own code to the rules; what it finds out of
+  scope (a parked package, another package's fault) is noted, not
+  fixed, and picked up by the review of the step that touches it.
 - **Each part of the work is recorded**: what was built, what was
   decided while building and why, what was found, how it was validated.
 - **How a task reads**: **asked**, a request from a member, not yet
