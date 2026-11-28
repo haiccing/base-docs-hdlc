@@ -60,6 +60,20 @@ says where it is built.
 - **Ids, not versions**: a validated instance gets an id; the commit
   that records it is its place in the history, the authoritative record.
   Built: packages pinned by commit, bundles by their content's hash.
+- **Visible data state** (the human, 2026-11-27: "Visible data state,
+  in state hidden 'in code'. This principle applies to data and
+  metadata"): no state is hidden in code; data and metadata alike are
+  in the repository. `main` is the data layer; the other layers hold
+  metadata, some local to the machine, some with a larger scope.
+  Built: an mrepo's layers.
+- **Air-gapped, from self-containment** (the human, 2026-11-27: "The
+  platform internally will not have direct internet access, that will
+  all run through boundary processes with validation/security etc
+  checked at the boundary"): inside, nothing reaches the internet;
+  what comes from outside comes through a boundary process, validated
+  and checked there. Built in part: an install deploys from its
+  sources folder only, filled by a download (`base-docs-haicc`,
+  "sources").
 - **Private instance data in a repository of its own**: a unit
   describes the private data it needs (its config schema, meaning,
   examples) and holds none; a running instance's config, data and
@@ -90,6 +104,12 @@ says where it is built.
   "we", "our terms", "our order of work". Bring an opinion and a
   recommendation, not only questions; a decision is made together, in
   discussion. Who said what is recorded, in the words used.
+- **Continuous improvement through dialogue** (the human, 2026-11-27:
+  "a feedback cycle within a team: individuals don't 'try to be right
+  first time', but do the work as they see it and ask for feedback.
+  Continuous improvement through dialogue"): each member does the work
+  as they see it and asks for feedback; the cold review and the
+  collaborative review ("Work") are that cycle made a rule.
 - **Finish the discussion before building**: a reading of what was said
   is put back in its own words and confirmed before any of it is built.
   Building on an unconfirmed reading, even a mostly right one, costs
